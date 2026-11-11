@@ -17,6 +17,7 @@ A **standalone Black Boy Band Roblox game**, built in Luau and Rojo. This is the
 - Free progress unlock indicators appear at 3 and 7 stamps; cosmetic assets and UI have **not** been built yet.
 
 - Save poster/fan progress plus quests and stamps using a server-owned, session-locked DataStore record. If Studio API access is unavailable or a record cannot be locked, gameplay remains temporary and must not overwrite previous saved progress.
+- A **BBB Crew Showcase** rooftop activity now supports 1–4 people with four timed roles (Lead, Lights, Hype, Crew), stage light feedback, a shared crowd score, and once-per-day Fans. Players start/join via an in-world proximity prompt, then use **G** / controller **X** / touch **HIT**. The 96 BPM show currently uses visual timing only, pending approved BBB audio.
 - Multiple Roblox players can join and explore the same place. No live concert scheduling or collaborative music production yet.
 
 **Current media:** Placeholder geometry/signage only; no private or released recordings, artwork, member likenesses, user secrets, monetization, or copyrighted outside assets are imported. The rhythm activity is **visual-only until approved Roblox audio assets are uploaded and connected**.
@@ -40,6 +41,8 @@ A **standalone Black Boy Band Roblox game**, built in Luau and Rojo. This is the
 - [ ] Two-player dance gives 15 Fans once per day per participating player, only after server-observed occupancy.
 - [ ] The INVITE button opens only on player request; no reward for opening or sending an invitation.
 - [ ] Rooftop minigame starts only from proximity prompt; a remote tap without an active session grants nothing.
+- [ ] Crew Showcase lobby admits 1–4 people and each role has distinct cues; server checks beat timing and distances.
+- [ ] Showcase's daily reward is paid only once, and no solo stage session can overlap it.
 - [ ] Duplicate taps on the same beat are ignored; round reward is awarded only after finishing and qualifying.
 - [ ] Desktop F and mobile TAP work; timer/feedback stays legible.
 - [ ] Rejoin loads existing M0 fans/posters and new quest/stamp data with DataStore enabled in a separate test experience; failed/locked loads never overwrite existing saves.
@@ -60,3 +63,7 @@ The first implementation deliberately has **no Robux purchases**. See [retention
 **Repository:** https://github.com/PrinceJonaa/Blackboyband-Studio
 
 **Important:** This public source repository contains only standalone game scripts and documentation, not private audio, unreleased tracks, credentials, or other projects' assets.
+
+## M1 Gameplay — Crew Showcase
+
+[Full gameplay instructions and acceptance criteria](SHOWTIME_GAMEPLAY.md). The game is in a draft PR pending a real Roblox Studio build, mobile playtest, and 2–4 person session. **No real-money products or audio uploads** are included.
