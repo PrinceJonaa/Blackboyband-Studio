@@ -18,7 +18,7 @@ local writing = {}
 local function emptyProfile()
     return {
         version = 2, fans = 0, posters = {}, stamps = 0,
-        daily = nil, jamRewardDay = -1,
+        daily = nil, jamRewardDay = -1, showRewardDay = -1,
     }
 end
 
@@ -35,6 +35,8 @@ local function hydrate(value)
     result.stamps = saneCount(value.stamps, 100000)
     result.jamRewardDay = typeof(value.jamRewardDay) == "number"
         and value.jamRewardDay or -1
+    result.showRewardDay = typeof(value.showRewardDay) == "number"
+        and value.showRewardDay or -1
     if typeof(value.posters) == "table" then
         for _, id in ipairs({"shop", "mel", "noel", "backstage"}) do
             result.posters[id] = value.posters[id] == true
@@ -68,6 +70,7 @@ local function snapshot(profile)
             completed = table.clone(profile.daily.completed),
         } or nil,
         jamRewardDay = profile.jamRewardDay,
+        showRewardDay = profile.showRewardDay,
     }
 end
 
