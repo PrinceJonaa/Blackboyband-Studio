@@ -5,7 +5,7 @@
 ## Play loop
 1. Join the standalone BBB Roblox game, go to the rooftop via lift or CRT TV.
 2. At the luminous **CREW SHOWCASE / JOIN HERE** prompt, press the Roblox proximity interaction.
-3. An **opt-in 9-second lobby** accepts 1–4 players. Roles are assigned in join order: **LEAD** (beats 1,3), **LIGHTS** (beats 2,4), **HYPE** (beat 4), **CREW** (beats 1,3), repeated over four 4-beat phrases.
+3. An **opt-in 9-second lobby** accepts 1–4 players. Roles are assigned in join order: **LEAD** (beats 1,3), **LIGHTS** (beats 2,4), **HYPE** (beat 4), **CREW** (beats 1,4), repeated over four 4-beat phrases.
 4. A synchronized **96 BPM / 16-beat show** starts after a 2-second countdown. Press **G** (desktop), **X** (controller), or the on-screen **HIT** button. The server checks the nearest target beat from `workspace:GetServerTimeNow()` and grades PERFECT (±95ms), GOOD (±195ms), OFF (±280ms), or WAIT on other beats.
 5. Four physical stage lamps change colors each beat, and the UI reports the crowd-energy percentage and individual hits when the round ends.
 6. If a player gets 2+ successful hits, they earn **15 Fans** once per UTC day. With 2+ actual participants and 8+ total successful hits, the first qualifying run of the day earns **25 Fans** instead. Returning players may practice unlimited times for fun.
