@@ -1,0 +1,10 @@
+{
+  "name": "BBB World",
+  "tree": {
+    "$className": "DataModel",
+    "ServerScriptService": { "$path": "src/server" },
+    "StarterPlayer": {
+      "StarterPlayerScripts": { "$path": "src/client" }
+    }
+  }
+}
