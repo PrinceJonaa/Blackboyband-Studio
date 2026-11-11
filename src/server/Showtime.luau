@@ -169,6 +169,10 @@ remote.OnServerEvent:Connect(function(player, kind)
     if not event or event.phase ~= "playing" then return end
     local member = findMember(event, player)
     if not member or not nearCallback or not nearCallback(player) then return end
+    -- Cap per-client network work even when an exploit fires rapid remote calls.
+    local receipt = os.clock()
+    if member.lastPacketAt and receipt - member.lastPacketAt < 0.075 then return end
+    member.lastPacketAt = receipt
     local now = workspace:GetServerTimeNow() - event.startAt
     local beat, grade, points = Rules.judge(member.role, now, member.used)
     if beat then
