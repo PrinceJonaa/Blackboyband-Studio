@@ -2,6 +2,7 @@
 -- BBB-only world and progression; no assets, code, or saves imported from another game.
 local Players = game:GetService("Players")
 local Progression = require(script.Parent:WaitForChild("Progression"))
+local Showtime = require(script.Parent:WaitForChild("Showtime"))
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Lighting = game:GetService("Lighting")
 
@@ -147,6 +148,21 @@ sign("ROOFTOP JAM", Vector3.new(68, 20, 60), Color3.fromRGB(255, 199, 90))
 block("Stage", Vector3.new(26, 1.5, 16), Vector3.new(68, 17, 75),
     Color3.fromRGB(111, 70, 153))
 sign("96 BPM / 16 BEATS", Vector3.new(68, 21, 81), Color3.fromRGB(242, 191, 255))
+
+-- Real stage cues for Showtime. Keep fixtures attached to the stage, not screen-space UI.
+local showLights = {}
+for i, position in ipairs({
+    Vector3.new(55, 20, 74), Vector3.new(81, 20, 74),
+    Vector3.new(55, 20, 82), Vector3.new(81, 20, 82),
+}) do
+    local fixture = block("BBB Stage Light " .. i, Vector3.new(3, 3, 3),
+        position, Color3.fromRGB(45, 63, 105), Enum.Material.Neon)
+    fixture.Shape = Enum.PartType.Ball
+    fixture.CanCollide = false
+    table.insert(showLights, fixture)
+end
+sign("CREW SHOWCASE / JOIN HERE", Vector3.new(68, 23, 52),
+    Color3.fromRGB(117, 233, 238))
 
 local function teleport(player, position)
     if player.Character then
@@ -460,6 +476,10 @@ end
 
 interaction("Rooftop Jam", STAGE + Vector3.new(0, 2, 0), "Start jam", function(player)
     if not near(player, STAGE, 32) or sessions[player] then return end
+    if Showtime.isOnStage() then
+        notify(player, "The crew showcase owns the stage right now.")
+        return
+    end
     local session = {
         startAt = workspace:GetServerTimeNow() + 2.5,
         attempts = 0, hits = 0, points = 0, used = {},
@@ -491,4 +511,47 @@ action.OnServerEvent:Connect(function(player, kind)
     if points > 0 then session.hits += 1 end
     session.points += points
     action:FireClient(player, "jam-grade", {grade = grade, points = session.points})
+end)
+
+
+-- Crew Showcase is independent of the solo rooftop timing challenge.
+-- A joined player is assigned a music-show role; all hits are judged on server time.
+local CREW_JOIN = Vector3.new(68, 19, 55)
+Showtime.configure({
+    near = function(player)
+        local character = player.Character
+        local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+        return humanoid ~= nil and humanoid.Health > 0
+            and near(player, CREW_JOIN, 37)
+    end,
+    validPlayer = function(player)
+        -- Any active solo rooftop round keeps the shared stage reserved.
+        return profiles[player] ~= nil and next(sessions) == nil
+    end,
+    reward = function(player, amount)
+        local profile = profiles[player]
+        if not profile then return 0 end
+        local today = math.floor(os.time() / 86400)
+        if profile.showRewardDay == today then return 0 end
+        profile.showRewardDay = today
+        giveFans(player, amount)
+        return amount
+    end,
+    flash = function(beat)
+        local palette = {
+            Color3.fromRGB(72, 217, 232), Color3.fromRGB(203, 100, 242),
+            Color3.fromRGB(248, 192, 85), Color3.fromRGB(92, 240, 163),
+        }
+        for i, fixture in ipairs(showLights) do
+            fixture.Color = beat < 0 and Color3.fromRGB(45, 63, 105)
+                or palette[((beat + i - 1) % #palette) + 1]
+        end
+    end,
+})
+interaction("BBB Crew Showcase", CREW_JOIN, "Join show", function(player)
+    if next(sessions) ~= nil then
+        notify(player, "A solo rooftop jam is running. Join the crew show afterward.")
+        return
+    end
+    Showtime.join(player)
 end)
