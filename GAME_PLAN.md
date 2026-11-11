@@ -41,6 +41,9 @@ Spawn, six labeled spaces, in-world BBB CRT channel travel, rooftop lift, poster
 **M1: first real music session**
 Replace the geometric markers with mobile-friendly art; secure/upload **one** approved track into Roblox; synchronize stage FX to a beatmap; a simple studio step sequencer; NPC audience presence only when actually nearby.
 
+**M1.1: Crew Showcase gameplay (draft, Studio validation pending)**
+1–4 players opt into a synchronized 16-beat rooftop performance with dedicated Lead/Lights/Hype/Crew cues, server-judged actions, stage-light effects, crowd results, and capped daily Fans. See [`SHOWTIME_GAMEPLAY.md`](SHOWTIME_GAMEPLAY.md). No audio IDs, real tracks, or Roblox monetization yet.
+
 **M2: social game**
 Event director for scheduled showcases, crew objectives, join/leave recovery, 2–4 player co-op, user-enabled accessibility settings, player feedback evidence, basic in-world radio. Keep game available outside scheduled concerts.
 
