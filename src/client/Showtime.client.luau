@@ -79,7 +79,8 @@ local bpm, beats = 96, 16
 local hideVersion = 0
 
 local function targetFor(beat)
-    if role == "LEAD" or role == "CREW" then return beat % 2 == 0 end
+    if role == "LEAD" then return beat % 2 == 0 end
+    if role == "CREW" then return beat % 4 == 0 or beat % 4 == 3 end
     if role == "LIGHTS" then return beat % 2 == 1 end
     if role == "HYPE" then return beat % 4 == 3 end
     return false
