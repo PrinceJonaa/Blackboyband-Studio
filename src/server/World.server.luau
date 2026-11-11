@@ -525,7 +525,8 @@ Showtime.configure({
             and near(player, CREW_JOIN, 37)
     end,
     validPlayer = function(player)
-        return profiles[player] ~= nil and sessions[player] == nil
+        -- Any active solo rooftop round keeps the shared stage reserved.
+        return profiles[player] ~= nil and next(sessions) == nil
     end,
     reward = function(player, amount)
         local profile = profiles[player]
@@ -548,8 +549,8 @@ Showtime.configure({
     end,
 })
 interaction("BBB Crew Showcase", CREW_JOIN, "Join show", function(player)
-    if sessions[player] then
-        notify(player, "Finish your solo rooftop jam before joining the show.")
+    if next(sessions) ~= nil then
+        notify(player, "A solo rooftop jam is running. Join the crew show afterward.")
         return
     end
     Showtime.join(player)
